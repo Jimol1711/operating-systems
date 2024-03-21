@@ -16,5 +16,5 @@
 
 double llenarMaletaPar(double w[], double v[], int z[], int n,
                        double maxW, int k) {
-  // ... Modifique esta funcion ...
+  
 }
