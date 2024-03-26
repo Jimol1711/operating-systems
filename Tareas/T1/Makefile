@@ -12,7 +12,7 @@ SHELL=bash -o pipefail
 
 INCLUDE=
 CFLAGS=-Wall -Werror -pedantic -std=c18 -Wno-unused-function $(INCLUDE)
-LDLIBS=-lm
+LDLIBS=-lm -lpthread
 ARCH=$(shell arch)
 
 MAK=make --no-print-directory
