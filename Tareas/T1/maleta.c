@@ -23,7 +23,13 @@ typedef struct {
 // Declaración de funcion para phtread_create
 void *thread(void *args) {
     Args *pargs = (Args *)args;
-    llenarMaletaSec(pargs->w, pargs->v, pargs->z, pargs->n, pargs->maxW, (pargs->k) / 8);
+    double *w = pargs->w;
+    double *v = pargs->v;
+    int *z = pargs->z;
+    int n = pargs->n;
+    int maxW = pargs->maxW;
+    int k = pargs->k;
+    llenarMaletaSec(w, v, z, n, maxW, k / 8);
     return NULL;
 }
 
@@ -56,6 +62,10 @@ double llenarMaletaPar(double w[], double v[], int z[], int n,
         args_array[i].k = k;
         
         pthread_create(&pids[i], NULL, thread, &args_array[i]);
+
+        for (int j = 0; j < n; j++) {
+            // asignar el z_thread
+        }
 
         // Después de hacer el calculo asigna el mejor array z_thread a z
         for (int i = 0; i < n; i++) {
