@@ -10,7 +10,7 @@
 
 #include "maleta.h"
 
-// Estructura para los argumentos de la función
+// Estructura para los argumentos de la función y el retorno en best
 typedef struct {
     double *w;
     double *v;
@@ -18,6 +18,7 @@ typedef struct {
     int n;
     double maxW;
     int k;
+    double best;
 } Args;
 
 // Declaración de funcion para phtread_create
@@ -29,7 +30,8 @@ void *thread(void *args) {
     int n = pargs->n;
     int maxW = pargs->maxW;
     int k = pargs->k;
-    llenarMaletaSec(w, v, z, n, maxW, k / 8);
+    double best = llenarMaletaSec(w, v, z, n, maxW, k / 8);
+    pargs->best = best;
     return NULL;
 }
 
@@ -41,19 +43,15 @@ double llenarMaletaPar(double w[], double v[], int z[], int n,
     double bestSum = -1;
 
     for (int i = 0; i < 8; i++) {
-
-        // Arreglo z para cada thread
-        int z_thread[] = malloc(n * sizeof(int));
-
-        // Alocando memoria para w y v
+        // Alocando memoria para w, v y z
         args_array[i].w = malloc(n * sizeof(double));
         args_array[i].v = malloc(n * sizeof(double));
+        args_array[i].z = malloc(n * sizeof(int));
 
-        // Asignación de elementos de w y v al arreglo args_array (Esto ocurre en cada thread independientemente)
+        // Asignación de elementos de w y v al arreglo args_array
         for (int j = 0; j < n; j++) {
             args_array[i].w[j] = w[j];
             args_array[i].v[j] = v[j];
-            args_array[i].z[j] = z_thread[j];
         }
 
         // Asignación de n, maxW y k
@@ -61,37 +59,29 @@ double llenarMaletaPar(double w[], double v[], int z[], int n,
         args_array[i].maxW = maxW;
         args_array[i].k = k;
         
+        // Creación del thread
         pthread_create(&pids[i], NULL, thread, &args_array[i]);
-
-        for (int j = 0; j < n; j++) {
-            // asignar el z_thread
-        }
-
-        // Después de hacer el calculo asigna el mejor array z_thread a z
-        for (int i = 0; i < n; i++) {
-            int sum = 0;
-            if (z_thread[i] != 0) {
-                sum += v[i];
-            }
-            if (sum > bestSum) {
-                bestSum = sum;
-                z = z_thread;
-            }
-        }
-        bestSum = -1;
-        free(z_thread);
     }
 
-    // Entierro de los threads
     for (int i = 0; i < 8; i++) {
+        // Entierro del thread
         pthread_join(pids[i], NULL);
+        // Después de hacer el calculo encuentra la mejor suma y asigna el arreglo z de ese thread a z
+        if (args_array[i].best >= bestSum) {
+            bestSum = args_array[i].best;
+            for (int j = 0; j < n; j++) {
+                z[j] = 0;
+                z[j] = args_array[i].z[j];
+            }
+        }
     }
 
-    // Free memory allocated for w and v in args_array
+    // Liberar memoria de los malloc
     for (int i = 0; i < 8; i++) {
         free(args_array[i].w);
         free(args_array[i].v);
+        free(args_array[i].z);
     }
-
-    return 0;
+    
+    return bestSum;
 }
