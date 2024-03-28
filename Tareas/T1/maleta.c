@@ -37,7 +37,7 @@ double llenarMaletaPar(double w[], double v[], int z[], int n,
     for (int i = 0; i < 8; i++) {
 
         // Arreglo z para cada thread
-        int *z_thread = malloc(n * sizeof(int));
+        int z_thread[] = malloc(n * sizeof(int));
 
         // Alocando memoria para w y v
         args_array[i].w = malloc(n * sizeof(double));
@@ -47,15 +47,13 @@ double llenarMaletaPar(double w[], double v[], int z[], int n,
         for (int j = 0; j < n; j++) {
             args_array[i].w[j] = w[j];
             args_array[i].v[j] = v[j];
+            args_array[i].z[j] = z_thread[j];
         }
 
         // Asignación de n, maxW y k
         args_array[i].n = n;
         args_array[i].maxW = maxW;
         args_array[i].k = k;
-
-        // Asignación del arreglo z
-        args_array[i].z = z_thread;
         
         pthread_create(&pids[i], NULL, thread, &args_array[i]);
 
@@ -70,6 +68,8 @@ double llenarMaletaPar(double w[], double v[], int z[], int n,
                 z = z_thread;
             }
         }
+        bestSum = -1;
+        free(z_thread);
     }
 
     // Entierro de los threads
