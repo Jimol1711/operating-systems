@@ -45,5 +45,5 @@ void desocupar(int idx){
 }
 
 
-void transportar(Contenedor *cont, Ciudad *orig, Ciudad *dest){  
+void transportar(Contenedor *cont, Ciudad *orig, Ciudad *dest){
 }
