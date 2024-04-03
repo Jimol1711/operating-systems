@@ -8,14 +8,13 @@
 #include "reservar.h"
 
 // Defina aca las variables globales y funciones auxiliares que necesite
+pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t c = PTHREAD_COND_INITIALIZER;
 
 void initReservar() {
-    int *estacionamientos[10];
 }
 
 void cleanReservar() {
-  
 }
 
 int reservar(int k) { // k es el número de estacionamientos requerido
