@@ -52,8 +52,8 @@ int reservar(int k) { // k es el número de estacionamientos requerido
 }
 
 void liberar(int e, int k) { // e es el índice del primer estacionamiento donde está, k es el número de estacionamientos requerido
-  // Se invoca cuando un automovilista se va
-  // Libera todos los estacionamientos reservados por un automovilista con reservar
+    // Se invoca cuando un automovilista se va
+    // Libera todos los estacionamientos reservados por un automovilista con reservar
     pthread_mutex_lock(&mutex);
     // Liberar los estacionamientos reservados
     for (int i = e; i < e + k; ++i) {
