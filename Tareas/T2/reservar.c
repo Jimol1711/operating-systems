@@ -9,7 +9,7 @@
 
 pthread_mutex_t mutex;
 pthread_cond_t cond;
-int disponibilidad[10] = {0};
+int estacionamientos[10] = {0};
 int colaEspera = 0;
 int turno = 0;
 
@@ -35,7 +35,7 @@ int reservar(int k) {
         // Buscar k estacionamientos contiguos disponibles
         for (i = 0; i <= 10 - k; i++) {
             for (j = i; j < i + k; j++) {
-                if (disponibilidad[j] == 1) 
+                if (estacionamientos[j] == 1) 
                     break; // Estacionamiento ocupado
             }
             if (j == i + k) 
@@ -49,7 +49,7 @@ int reservar(int k) {
 
     // Reservar los estacionamientos encontrados
     for (j = i; j < i + k; j++) {
-        disponibilidad[j] = 1;
+        estacionamientos[j] = 1;
     }
 
     turno++;
@@ -62,7 +62,7 @@ void liberar(int e, int k) {
     pthread_mutex_lock(&mutex);
     // Liberar los estacionamientos reservados
     for (int i = e; i < e + k; i++) {
-        disponibilidad[i] = 0;
+        estacionamientos[i] = 0;
     }
     // Notificar a otros vehículos en espera
     pthread_cond_broadcast(&cond);
