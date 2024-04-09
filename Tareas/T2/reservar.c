@@ -10,6 +10,7 @@
 pthread_mutex_t mutex;
 pthread_cond_t cond;
 int estacionamientos[10] = {0};
+// Variables para manejar el orden de llegada
 int colaEspera = 0;
 int turno = 0;
 
@@ -26,6 +27,7 @@ void cleanReservar() {
 int reservar(int k) {
     pthread_mutex_lock(&mutex);
     int miTurno = colaEspera++;
+    // Si no es mi turno, esperar
     while (miTurno != turno) {
         pthread_cond_wait(&cond, &mutex);
     }
