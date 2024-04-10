@@ -26,6 +26,7 @@ void cleanReservar() {
 
 int reservar(int k) {
     pthread_mutex_lock(&mutex);
+    // Reserva uno, aumenta la cola
     int miTurno = colaEspera++;
     // Si no es mi turno, esperar
     while (miTurno != turno) {
