@@ -11,14 +11,14 @@ pthread_mutex_t mutex;
 pthread_cond_t cond;
 int estacionamientos[10];
 // Variables para manejar el orden de llegada
-int ticket;
-int ticketDist;
+int ticket_dist;
+int display;
 
 void initReservar() {
     pthread_mutex_init(&mutex, NULL);
     pthread_cond_init(&cond, NULL);
-    ticket = 0;
-    ticketDist = 0;
+    ticket_dist = 0;
+    display = 0;
     for (int i = 0; i < 10; i++) {
         estacionamientos[i] = 0;
     }
@@ -32,9 +32,9 @@ void cleanReservar() {
 int reservar(int k) {
     pthread_mutex_lock(&mutex);
     // Reserva uno, aumenta la cola
-    ticket++;
-    // Si no es mi turno, esperar
-    while (ticket != ticketDist) {
+    int my_ticket = ticket_dist++;
+    // Si no es mi ticket, esperar
+    while (my_ticket != display) {
         pthread_cond_wait(&cond, &mutex);
     }
 
@@ -60,7 +60,7 @@ int reservar(int k) {
         estacionamientos[j] = 1;
     }
 
-    ticket++;
+    display++;
     pthread_cond_broadcast(&cond);
     pthread_mutex_unlock(&mutex);
     return i;
