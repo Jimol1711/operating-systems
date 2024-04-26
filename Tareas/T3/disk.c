@@ -60,6 +60,22 @@ void requestDisk(int track) {
 void releaseDisk() {
     pthread_mutex_lock(&m);
 
+    #if 1
+    if (!emptyPriQueue(priQ)) {
+        Request *req = priGet(priQ); // Este llega hasta el cuarto test
+        if (req->my_track >= current_track) {
+            req->ready = 1;
+            current_track = req->my_track;
+            pthread_cond_signal(&(req->c));
+        } else {
+            put(q, req);
+        }
+    } else {
+        disk_busy = 0;
+    }
+    #endif
+
+    #if 0
     if (!emptyPriQueue(priQ)) {
         Request *next;
         do {
@@ -68,17 +84,45 @@ void releaseDisk() {
                 Request *lower = priGet(priQ);
                 put(q,lower);
             } else {
-                if (!emptyQueue(q)) {
+                while(!emptyQueue(q)) {
                     Request *putBack = get(q);
                     priPut(priQ,putBack,putBack->my_track);
-                } else {
-                    break;
                 }
             }
         } while(next->my_track < current_track || !emptyQueue(q));
     } else {
         disk_busy = 0;
     }
+    #endif
+
+    #if 0
+
+    if (!emptyPriQueue(priQ)) {
+        Request *req = (Request *)priGet(priQ);
+        req->ready = 1;
+        pthread_cond_signal(&(req->c));
+    } else {
+        // Liberar el disco y avanzar al siguiente track según la estrategia C-SCAN
+        disk_busy = 0;
+        if (!emptyQueue(q)) {
+            int next_track = current_track + 1;
+
+            while (!emptyQueue(q)) {
+                Request *req = (Request *)get(q);
+                if (req->my_track == next_track) {
+                    disk_busy = 1;
+                    current_track = next_track;
+                    pthread_cond_signal(&(req->c));
+                    free(req);
+                    break;
+                } else {
+                    put(q, req);
+                }
+            }
+        }
+    }
+
+    #endif
 
     pthread_mutex_unlock(&m);
 }
