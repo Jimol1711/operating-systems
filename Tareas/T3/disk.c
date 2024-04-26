@@ -62,14 +62,25 @@ void releaseDisk() {
 
     #if 1
     if (!emptyPriQueue(priQ)) {
-        Request *req = priGet(priQ); // Este llega hasta el cuarto test
-        if (req->my_track >= current_track) {
-            req->ready = 1;
-            current_track = req->my_track;
-            pthread_cond_signal(&(req->c));
-        } else {
-            put(q, req);
-        }
+
+        do {
+            Request *req = priGet(priQ);
+            if (req->my_track >= current_track) {
+                req->ready = 1;
+                current_track = req->my_track;
+
+            while(!emptyQueue(q)) {
+                Request *putBack = get(q);
+                priPut(priQ, putBack, putBack->my_track);
+            }
+
+                pthread_cond_signal(&(req->c));
+            } else {
+                put(q, req);
+            }
+            free(req);
+        } while(!emptyPriQueue(priQ));
+
     } else {
         disk_busy = 0;
     }
