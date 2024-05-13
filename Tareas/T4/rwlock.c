@@ -17,7 +17,7 @@ struct request {
 } Request;
 
 nRWLock *nMakeRWLock() {
-  nRWLock *rwl = malloc(sizeof(nRWLock));
+  // Creación del rwl
   rwl->writers_queue = nth_makeQueue();
   rwl->readers_queue = nth_makeQueue();
   rwl->num_readers = 0;
@@ -32,6 +32,13 @@ void nDestroyRWLock(nRWLock *rwl) {
 int nEnterRead(nRWLock *rwl, int timeout) {
   START_CRITICAL
 
+  if (!rwl->writing && nth_emptyQueue(rwl->writers_queue)) {
+    // Se acepta lector
+    rwl->num_readers++;
+  } else {
+    // Lector queda pendiente
+  }
+
   END_CRITICAL
   return 1;
 }
@@ -39,18 +46,38 @@ int nEnterRead(nRWLock *rwl, int timeout) {
 int nEnterWrite(nRWLock *rwl, int timeout) {
   START_CRITICAL
 
+  if (nth_emptyQueue(rwl->readers_queue) || rwl->writing) {
+    // Se acepta escritor
+    rwl->writing = 1;  
+  } else {
+    // Escritor queda pendiente
+  }
+
   END_CRITICAL
   return 1;
 }
 
 void nExitRead(nRWLock *rwl) {
   START_CRITICAL
-  
+  rwl->num_readers--;
+  if (num_readers == 0) {
+    if (!nth_emptyQueue(rwl->writers_queue)) {
+      // Se acepta escritor que lleva más tiempo
+    }
+  }
+
   END_CRITICAL
 }
 
 void nExitWrite(nRWLock *rwl) {
   START_CRITICAL
+
+  if (!nth_emptyQueue(rwl->readers_queue)) {
+    // Se acepta a todos los lectores pendientes
+  } else if (nth_emptyQueue(rwl->readers_queue) && 
+            !nth_emptyQueue(rwl->writers_queue)) {
+    // Se acepta escritor que lleva más tiempo esperando
+  }
 
   END_CRITICAL
 }
