@@ -11,7 +11,6 @@
 pthread_mutex_t m;
 PriQueue *priQ;
 PriQueue *priQ2;
-Queue *q;
 int disk_busy;
 int current_track;
 
@@ -26,7 +25,6 @@ void iniDisk(void) {
     pthread_mutex_init(&m, NULL);
     priQ = makePriQueue();
     priQ2 = makePriQueue();
-    q = makeQueue();
     disk_busy = 0;
     current_track = 0;
 }
@@ -35,7 +33,6 @@ void cleanDisk(void) {
     pthread_mutex_destroy(&m);
     destroyPriQueue(priQ);
     destroyPriQueue(priQ2);
-    destroyQueue(q);
 }
 
 void requestDisk(int track) {
