@@ -12,18 +12,22 @@ struct rwlock {
 };
 
 nRWLock *nMakeRWLock() {
+
   nRWLock *rwl = (nRWLock *)malloc(sizeof(nRWLock));
   rwl->num_readers = 0;
   rwl->writing = 0;
   rwl->writers_queue = nth_makeQueue();
   rwl->readers_queue = nth_makeQueue();
+
   return rwl;
 }
 
 void nDestroyRWLock(nRWLock *rwl) {
+
   nth_destroyQueue(rwl->writers_queue);
   nth_destroyQueue(rwl->readers_queue);
   free(rwl);
+
 }
 
 int nEnterRead(nRWLock *rwl, int timeout) {
@@ -32,8 +36,6 @@ int nEnterRead(nRWLock *rwl, int timeout) {
   if (!rwl->writing && nth_emptyQueue(rwl->writers_queue)) {
     // Se acepta lector
     rwl->num_readers++;
-    nThread reader = nth_getFront(rwl->readers_queue);
-    setReady(reader);
   } else {
     // Lector queda pendiente
     nThread reader = nSelf();
@@ -49,7 +51,7 @@ int nEnterRead(nRWLock *rwl, int timeout) {
 int nEnterWrite(nRWLock *rwl, int timeout) {
   START_CRITICAL
 
-  if (nth_emptyQueue(rwl->readers_queue) || !rwl->writing) {
+  if (rwl->num_readers==0 && !rwl->writing) {
     // Se acepta escritor
     rwl->writing = 1; 
   } else {
@@ -87,6 +89,7 @@ void nExitWrite(nRWLock *rwl) {
   if (!nth_emptyQueue(rwl->readers_queue)) {
     // Se acepta a todos los lectores pendientes
     while(!nth_emptyQueue(rwl->readers_queue)) {
+      rwl->num_readers++;
       nThread reader = nth_getFront(rwl->readers_queue);
       setReady(reader);
       schedule();
