@@ -1,5 +1,5 @@
 Sistema operativo utilizado
-Linux debian11mate 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+Linux debian12 6.1.0-18-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) x86_64 GNU/Linux
 ==== run-san ====
 gcc -g -DSAN=1 -fsanitize=address -fsanitize=undefined -Wall -Werror -pedantic -DNTHREADS -std=c18 -InKernel  test-rwlock.c rwlock.c nKernel/nthread.c nKernel/nutil.c nKernel/ntime.c nKernel/pss.c nKernel/sched-fcfs.c nKernel/sched-rr.c nKernel/sched-pri-1core.c nKernel/sched-fcfs-1core.c nKernel/sem.c nKernel/mutex-cond.c nKernel/nmsgs.c nKernel/nsystem.c -lm -lpthread -lrt -o rwlock.bin-san
 --------------------------------------------
@@ -52,8 +52,8 @@ Info: setting single-core FCFS scheduling
 0: lector ana entra
 10: lector tomas solicita entrar
 10: lector tomas entra
-20: escritor ximena solicita entrar
-30: lector jorge solicita entrar
+21: escritor ximena solicita entrar
+31: lector jorge solicita entrar
 40: lector tomas sale
 50: lector ana sale
 50: escritor ximena entra
@@ -87,7 +87,7 @@ Info: setting single-core FCFS scheduling
 150: escritor veronica sale
 Felicitaciones: Aprobo los tests
 Info: Number of cores = 1
-Info: total context changes = 94
+Info: total context changes = 93
 Info: Implicit context changes = 0
 --------------------------------------------
 ./rwlock.bin-san 1
@@ -165,18 +165,18 @@ Info: setting single-core FCFS scheduling
 --- Test: entradas alternadas -------------------------
 0: lector ana solicita entrar
 0: lector ana entra
-10: escritor tomas solicita entrar
-20: escritor ximena solicita entrar
-30: escritor jorge solicita entrar
-40: escritor veronica solicita entrar
-50: lector alberto solicita entrar
-60: lector julio solicita entrar
+11: escritor tomas solicita entrar
+21: escritor ximena solicita entrar
+31: escritor jorge solicita entrar
+41: escritor veronica solicita entrar
+51: lector alberto solicita entrar
+61: lector julio solicita entrar
 70: lector ana sale
 70: escritor tomas entra
 80: escritor tomas sale
 80: lector alberto entra
 80: lector julio entra
-90: lector carolina solicita entrar
+91: lector carolina solicita entrar
 100: lector alberto sale
 110: lector julio sale
 110: escritor ximena entra
@@ -189,7 +189,7 @@ Info: setting single-core FCFS scheduling
 150: escritor veronica sale
 Felicitaciones: Aprobo los tests
 Info: Number of cores = 1
-Info: total context changes = 93
+Info: total context changes = 94
 Info: Implicit context changes = 0
 --------------------------------------------
 ./rwlock.bin-g -slice 1 -ncores 4 1
@@ -202,8 +202,8 @@ Test de esfuerzo
 ELLLELLLLLLEELLELEELEELEELEEELEEEELLEEELELLLEELEEELLELELLLELELELEELLLEEELLLLELLEELLLEEELELLLLEELLEEELEEEEEEELLEELELELEEEELELELLELLLEELLLELLELELEELEELELLLLEEEELLELLELLEELEELEELEEEEELLEEEELLLEELLLELLLLEELLLLELELLLEEEEEEEEEELEELELELLLEELEELLLLEEELLLLLEELLLLLELEEEELLLEELLLLLELELEEEELEEELELELLEEELLELELEELLEEEEELELELELEELELLEEELLLLELLEELELLEEEELELLELELLLLLLLLELLLLLELLLELLEEEELLLELLLLEELLLLEEELEELELELEEEEEEEELLLEELELELLLLLLLLLLLEELLELLLLLLLELELLELELELLLLELELLEEELLELELELEEEEEEEEELEEELLLELEEELLLEELELLELLEELLLLLLEEELEELELLLLLLLEELLEELELEELEELLLELEEELLLLLELELLLELEEEEEEELEELLLELLLLLELELEELLEEELLLELLLLELLLELLLEEELLELLLELEEELELELELEEELELEELELELELEELLLLEELELEELELEELLELLLLLLLLLEEEEELLLELLELELLELLELLLEEEEEELLLLELLLELEELEELLEEEEEELEEEEEEEELLLEEELLEELLLLELELLEELEELLLLLLELELELLLEEEELLLLELLEEELLLELLELEEELELEEELLLLELEEELLLELELLLEELLLELLEELLEEEELEEELELELLLLELEEEEEELLEELLEEEEELLEEELEEELEEEELLEEELEEEELELELLELLLELLLLELELLLEELEELEEELLLEEEELLLELELLEELLELELLLLELLLLEEELEEELELEEEEELLEELELELELELLLELLLLELELELELLLLEEEL
 Felicitaciones: Aprobo los tests
 Info: Number of cores = 4
-Info: total context changes = 85682
-Info: Implicit context changes = 32
+Info: total context changes = 79979
+Info: Implicit context changes = 2
 ==== run ====
 gcc -g -O -DOPT=1 -Wall -Werror -pedantic -DNTHREADS -std=c18 -InKernel  test-rwlock.c rwlock.c nKernel/nthread.c nKernel/nutil.c nKernel/ntime.c nKernel/pss.c nKernel/sched-fcfs.c nKernel/sched-rr.c nKernel/sched-pri-1core.c nKernel/sched-fcfs-1core.c nKernel/sem.c nKernel/mutex-cond.c nKernel/nmsgs.c nKernel/nsystem.c -lm -lpthread -lrt -o rwlock.bin
 --------------------------------------------
@@ -217,7 +217,7 @@ Test de esfuerzo
 LLLLELEELELELEELEEEELELLEELLEELLLELLELLEELEELLEELLELLLLELELLEEELELLLELEEEELLELEELELEELELLELLELLLLLELEELLLEELEEEELLELLLELLEELLLLLELLEELEEELEELELELEELLELELLLEELLLEEEEEEEEEEELELELELLELEEEELEEEELLLLLELLLEELEEELLEEELELEEEEELLLLLELLLEELELLLLELLLLLLELEEEEEEEEEEEELLLLELEELEEELEEELLLEEEELELEELLLLLLELLLELELLLLEEEELLELEEEEELLELLLELELLLLLEEEELLLLLLLEELELELLELLLLELEELLELLLEEELELELELEEELEEELEELELLLLELLELLLLLLELLLEEEEELELLLLLLLLLLEEEELELLELLLLLELLLELLLEELELLEEELLLLEELLELLEEEEELLEEEELLELLELELELLELELLLLEEEEEELEELLLEEEELLLELEELELLLEEEEEELELEEEEELLEEEEEELELEEELELLELLLELLLELELEELELEEELLEEELELELLELELLEELELLEELEELLLEEELELEELEELLLLELLEELLELELELLEELEELLEELELEEELEEELLELLLLLLLEELLELLLLLLELLEELLEELLEEELELELLEELELLELEELEELLELLELLLLLEELELLLELELLLEELELLEELEELEEEELELLELLLLLEEELLLELLEELEELLLLLLELLELELLELLELELLLELLEEELLEE
 Felicitaciones: Aprobo los tests
 Info: Number of cores = 4
-Info: total context changes = 438116
+Info: total context changes = 609143
 Info: Implicit context changes = 0
 --------------------------------------------
 ./rwlock.bin -slice 1 -ncores 4 1
@@ -230,5 +230,5 @@ Test de esfuerzo
 LLLLELEELELELEELEEEELELLEELLEELLLELLELLEELEELLEELLELLLLELELLEEELELLLELEEEELLELEELELEELELLELLELLLLLELEELLLEELEEEELLELLLELLEELLLLLELLEELEEELEELELELEELLELELLLEELLLEEEEEEEEEEELELELELLELEEEELEEEELLLLLELLLEELEEELLEEELELEEEEELLLLLELLLEELELLLLELLLLLLELEEEEEEEEEEEELLLLELEELEEELEEELLLEEEELELEELLLLLLELLLELELLLLEEEELLELEEEEELLELLLELELLLLLEEEELLLLLLLEELELELLELLLLELEELLELLLEEELELELELEEELEEELEELELLLLELLELLLLLLELLLEEEEELELLLLLLLLLLEEEELELLELLLLLELLLELLLEELELLEEELLLLEELLELLEEEEELLEEEELLELLELELELLELELLLLEEEEEELEELLLEEEELLLELEELELLLEEEEEELELEEEEELLEEEEEELELEEELELLELLLELLLELELEELELEEELLEEELELELLELELLEELELLEELEELLLEEELELEELEELLLLELLEELLELELELLEELEELLEELELEEELEEELLELLLLLLLEELLELLLLLLELLEELLEELLEEELELELLEELELLELEELEELLELLELLLLLEELELLLELELLLEELELLEELEELEEEELELLELLLLLEEELLLELLEELEELLLLLLELLELELLELLELELLLELLEEELLEE
 Felicitaciones: Aprobo los tests
 Info: Number of cores = 4
-Info: total context changes = 645318
-Info: Implicit context changes = 123
+Info: total context changes = 880615
+Info: Implicit context changes = 28

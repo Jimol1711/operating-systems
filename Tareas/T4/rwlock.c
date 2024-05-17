@@ -101,8 +101,8 @@ void nExitWrite(nRWLock *rwl) {
       nThread reader = nth_getFront(rwl->readers_queue);
       setReady(reader);
       rwl->num_readers++;
-      schedule();
     } while(!nth_emptyQueue(rwl->readers_queue));
+      schedule();
 
   } else if (nth_emptyQueue(rwl->readers_queue) && 
             !nth_emptyQueue(rwl->writers_queue)) {
