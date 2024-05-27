@@ -11,6 +11,16 @@ struct rwlock {
   NthQueue *readers_queue;
 };
 
+void *f(nThread writer) {
+
+  START_CRITICAL
+  // Eliminar escritor de la cola writers_queue
+  nth_delQueue(writer->ptr, writer);
+  writer->ptr = NULL;
+
+  END_CRITICAL
+}
+
 nRWLock *nMakeRWLock() {
 
   START_CRITICAL
@@ -63,11 +73,29 @@ int nEnterWrite(nRWLock *rwl, int timeout) {
     // Se acepta escritor
     rwl->writing = 1; 
   } else {
-    // Escritor queda pendiente
-    nThread writer = nSelf();
-    nth_putBack(rwl->writers_queue, writer);
-    suspend(WAIT_RWLOCK);
-    schedule();
+    if (timeout < 0) {
+      // Escritor queda pendiente
+      nThread writer = nSelf();
+      nth_putBack(rwl->writers_queue, writer);
+      suspend(WAIT_RWLOCK);
+      schedule();
+    } else {
+      // Escritor queda pendiente con timeout
+      nThread writer = nSelf();
+      nth_putBack(rwl->writers_queue, writer);
+      writer->ptr = rwl->writers_queue;
+      suspend(WAIT_RWLOCK_TIMEOUT);
+      nth_programTimer(timeout * 1000000LL, (*f)(writer));
+      schedule();
+      if (writer->ptr == NULL) {
+        END_CRITICAL
+        return 0;
+      } else {
+        END_CRITICAL
+        return 1;
+      }
+    }
+
   }
   
   END_CRITICAL
