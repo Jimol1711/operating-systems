@@ -11,10 +11,11 @@ struct rwlock {
   NthQueue *readers_queue;
 };
 
-void *f(nThread writer) {
+void f(nThread writer) {
 
   START_CRITICAL
   // Eliminar escritor de la cola writers_queue
+  // NthQueue *q = (NthQueue *)writer->ptr;
   nth_delQueue(writer->ptr, writer);
   writer->ptr = NULL;
 
@@ -85,7 +86,7 @@ int nEnterWrite(nRWLock *rwl, int timeout) {
       nth_putBack(rwl->writers_queue, writer);
       writer->ptr = rwl->writers_queue;
       suspend(WAIT_RWLOCK_TIMEOUT);
-      nth_programTimer(timeout * 1000000LL, (*f)(writer));
+      nth_programTimer(timeout * 1000000LL, f);
       schedule();
       if (writer->ptr == NULL) {
         END_CRITICAL
@@ -110,6 +111,7 @@ void nExitRead(nRWLock *rwl) {
     if (!nth_emptyQueue(rwl->writers_queue)) {
       // Se acepta escritor que lleva más tiempo
       nThread writer = nth_getFront(rwl->writers_queue);
+      // nth_delQueue(rwl->writers_queue, writer); // Borrar
       setReady(writer);
       rwl->writing=1;
       schedule();
@@ -127,6 +129,7 @@ void nExitWrite(nRWLock *rwl) {
     // Se acepta a todos los lectores pendientes
     do {
       nThread reader = nth_getFront(rwl->readers_queue);
+      // nth_delQueue(rwl->readers_queue, reader); // Borrar
       setReady(reader);
       rwl->num_readers++;
     } while(!nth_emptyQueue(rwl->readers_queue));
@@ -136,6 +139,8 @@ void nExitWrite(nRWLock *rwl) {
             !nth_emptyQueue(rwl->writers_queue)) {
     // Se acepta escritor que lleva más tiempo esperando
     nThread writer = nth_getFront(rwl->writers_queue);
+    // nth_delQueue(rwl->writers_queue, writer); // Borrar
+    setReady(writer);
     setReady(writer);
     rwl->writing=1;
     schedule();
