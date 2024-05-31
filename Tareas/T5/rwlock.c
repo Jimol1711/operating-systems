@@ -111,7 +111,8 @@ void nExitRead(nRWLock *rwl) {
     if (!nth_emptyQueue(rwl->writers_queue)) {
       // Se acepta escritor que lleva más tiempo
       nThread writer = nth_getFront(rwl->writers_queue);
-      // nth_delQueue(rwl->writers_queue, writer); // Borrar
+      if (writer->status == WAIT_RWLOCK_TIMEOUT) 
+        nth_cancelThread(writer);
       setReady(writer);
       rwl->writing=1;
       schedule();
@@ -129,7 +130,6 @@ void nExitWrite(nRWLock *rwl) {
     // Se acepta a todos los lectores pendientes
     do {
       nThread reader = nth_getFront(rwl->readers_queue);
-      // nth_delQueue(rwl->readers_queue, reader); // Borrar
       setReady(reader);
       rwl->num_readers++;
     } while(!nth_emptyQueue(rwl->readers_queue));
@@ -139,8 +139,8 @@ void nExitWrite(nRWLock *rwl) {
             !nth_emptyQueue(rwl->writers_queue)) {
     // Se acepta escritor que lleva más tiempo esperando
     nThread writer = nth_getFront(rwl->writers_queue);
-    // nth_delQueue(rwl->writers_queue, writer); // Borrar
-    setReady(writer);
+    if (writer->status == WAIT_RWLOCK_TIMEOUT) 
+      nth_cancelThread(writer);
     setReady(writer);
     rwl->writing=1;
     schedule();
