@@ -3,68 +3,70 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <limits.h>
-
 #include "pss.h"
 #include "bolsa.h"
 #include "spinlocks.h"
 
 // Declare aca sus variables globales
-typedef enum {PEND, RECHAZ, ADJUD} Estado;
+#define EN_ESPERA 0
+#define ADJUDICADO 1
+#define RECHAZADO 2
 
-int mutex = OPEN;
-Estado offer_state = PEND;
-int lowest_price = INT_MAX;
-char *lowest_seller = NULL;
-char *lowest_buyer = NULL;
-int *seller_spinlock = NULL;
+int spinlock = 0;
+int precio_min = 0;
+char *vendedor_min = NULL;
+char *comprador_ptr = NULL;
+int *vendedor_status_ptr = NULL;
+int *vendedor_spinlock_ptr = NULL;
 
 int vendo(int precio, char *vendedor, char *comprador) {
-    int sl = OPEN;
-    int result = 0;
+    int local_status = EN_ESPERA;
+    int local_spinlock = 0;
 
-    spinLock(&mutex);
-    if (precio < lowest_price) {
-        lowest_price = precio;
-        lowest_seller = vendedor;
-        seller_spinlock = &sl;
-        offer_state = PEND;
-        spinUnlock(&mutex);
+    spinLock(&spinlock);
+    if (precio_min == 0 || precio < precio_min) {
+        precio_min = precio;
+        vendedor_min = vendedor;
+        vendedor_status_ptr = &local_status;
+        vendedor_spinlock_ptr = &local_spinlock;
+        comprador_ptr = comprador;
+        spinUnlock(&spinlock);
 
-        // Esperar a que la oferta sea adjudicada o rechazada
-        spinLock(&sl);
-        if (offer_state == ADJUD) {
-            strcpy(comprador, lowest_buyer);
-            result = 1;
+        // Esperar hasta que un comprador compre o haya un vendedor con un precio menor
+        spinLock(&local_spinlock);
+        if (local_status == ADJUDICADO) {
+            return 1;
+        } else {
+            return 0;
         }
     } else {
-        spinUnlock(&mutex);
+        spinUnlock(&spinlock);
+        return 0;
     }
-    return result;
 }
 
 int compro(char *comprador, char *vendedor) {
-    int paid_price = 0;
-
-    spinLock(&mutex);
-    if (lowest_seller != NULL) {
-        paid_price = lowest_price;
-        strcpy(vendedor, lowest_seller);
-        lowest_buyer = comprador;
-        offer_state = ADJUD;
-
-        // Despertar al vendedor
-        spinUnlock(seller_spinlock);
-        
-        // Resetear variables globales
-        lowest_price = INT_MAX;
-        lowest_seller = NULL;
-        lowest_buyer = NULL;
-        seller_spinlock = NULL;
-
-        spinUnlock(&mutex);
+    spinLock(&spinlock);
+    if (precio_min == 0) {
+        spinUnlock(&spinlock);
+        return 0;
     } else {
-        spinUnlock(&mutex);
+        strcpy(vendedor, vendedor_min);
+        strcpy((char *)comprador_ptr, comprador);
+        int precio_pagado = precio_min;
+
+        // Actualizar el estado del vendedor
+        *vendedor_status_ptr = ADJUDICADO;
+        spinUnlock(vendedor_spinlock_ptr);
+
+        // Resetear los valores globales
+        precio_min = 0;
+        vendedor_min = NULL;
+        vendedor_status_ptr = NULL;
+        vendedor_spinlock_ptr = NULL;
+        comprador_ptr = NULL;
+
+        spinUnlock(&spinlock);
+        return precio_pagado;
     }
-    return paid_price;
 }
