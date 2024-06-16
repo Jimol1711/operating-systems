@@ -42,7 +42,7 @@ void spinLock(volatile int *psl) {
       pthread_cond_init(pcond, 0);
       define(map, (int *)psl, pcond);
     }
-    while (*psl!=OPEN)
+    while (*psl!=OPEN) 
       pthread_cond_wait(pcond, &mtx);
     *psl= CLOSED;
     pthread_mutex_unlock(&mtx);
