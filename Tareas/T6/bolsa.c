@@ -72,7 +72,7 @@ int compro(char *comprador, char *vendedor) {
         // Actualizar el estado del vendedor a ADJUDICADO
         *VL_ptr = ADJUDICADO;
         // Desbloquear el spinlock del vendedor
-        //*vendedor_spinlock_ptr = OPEN;
+        *vendedor_spinlock_ptr = OPEN;
 
         spinUnlock(vendedor_spinlock_ptr);
 
