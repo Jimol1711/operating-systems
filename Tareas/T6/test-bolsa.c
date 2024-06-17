@@ -131,6 +131,7 @@ static void *vendedor(void *ptr) {
       // Se logro la venta
       // Ahora verificamos que el comprador coincide con el
       // nombre del vendedor y el precio
+      // printf("comprador: %s\n", comprador);
       if (strncmp(comprador, "comp", 4)!=0) {
         fprintf(stderr, "El nombre del comprador debio comenzar con comp\n");
         exit(1);

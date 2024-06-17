@@ -29,6 +29,7 @@ int vendo(int precio, char *vendedor, char *comprador) {
             *VL_ptr = RECHAZADO;
             // Desbloquear el spinlock del vendedor anterior
             *vendedor_spinlock_ptr = OPEN;
+            spinUnlock(vendedor_spinlock_ptr);
         }
 
         // Actualizar variables globales con la información del nuevo vendedor
@@ -44,7 +45,8 @@ int vendo(int precio, char *vendedor, char *comprador) {
         spinLock(&vendedor_spinlock);
 
         if (VL == ADJUDICADO) {
-            strcpy(comprador, comprador_ptr); // Copiar el nombre del comprador
+            // Copiar el nombre del comprador
+            comprador = comprador_ptr;
             return 1;
         } else {
             return 0;
@@ -73,7 +75,6 @@ int compro(char *comprador, char *vendedor) {
         *VL_ptr = ADJUDICADO;
         // Desbloquear el spinlock del vendedor
         *vendedor_spinlock_ptr = OPEN;
-
         spinUnlock(vendedor_spinlock_ptr);
 
         // Resetear las variables globales
