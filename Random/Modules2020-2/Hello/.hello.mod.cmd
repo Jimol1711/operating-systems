@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Hello/hello.mod := printf '%s\n'   hello.o | awk '!x[$$0]++ { print("/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Hello/"$$0) }' > /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Hello/hello.mod
