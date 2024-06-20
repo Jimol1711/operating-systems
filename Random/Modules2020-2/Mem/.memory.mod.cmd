@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Mem/memory.mod := printf '%s\n'   memory.o | awk '!x[$$0]++ { print("/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Mem/"$$0) }' > /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Mem/memory.mod
