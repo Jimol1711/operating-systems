@@ -1,0 +1,17 @@
+# Crear dispositivo
+sudo mknod /dev/DRIVERNAME c 61 0
+
+# Definir permisos dispositivo
+sudo chmod a+rw /dev/DRIVERNAME
+
+# Conectar dispositivo
+sudo insmod $(PWD)/DRIVERNAME.ko
+
+# printar mensajes de dispositivos
+sudo dmesg | grep DRIVERNAME | tail -n 3
+
+# Desconectar dispositivo
+sudo rmmod DRIVERNAME.ko
+
+# Borrar dispositivo
+sudo rm /dev/DRIVERNAME
