@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T arch/x86/module.lds -o /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.ko /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.o /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.mod.o;  true

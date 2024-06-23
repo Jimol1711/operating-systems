@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Syncread/syncread.mod := printf '%s\n'   kmutex.o syncread-impl.o | awk '!x[$$0]++ { print("/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Syncread/"$$0) }' > /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Syncread/syncread.mod

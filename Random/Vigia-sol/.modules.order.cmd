@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Vigia-sol/modules.order := {   echo /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.ko; :; } > /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/modules.order

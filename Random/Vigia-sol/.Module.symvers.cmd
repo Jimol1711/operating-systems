@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Vigia-sol/Module.symvers :=  sed 's/ko$$/o/'  /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/modules.order | scripts/mod/modpost -m     -o /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/Module.symvers -e -i Module.symvers -T - 

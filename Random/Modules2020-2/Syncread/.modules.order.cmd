@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Syncread/modules.order := {   echo /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Syncread/syncread.ko; :; } > /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Syncread/modules.order

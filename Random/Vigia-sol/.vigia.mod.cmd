@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.mod := printf '%s\n'   kmutex.o vigia-impl.o | awk '!x[$$0]++ { print("/home/pss/Escritorio/Código/SOS/Random/Vigia-sol/"$$0) }' > /home/pss/Escritorio/Código/SOS/Random/Vigia-sol/vigia.mod
