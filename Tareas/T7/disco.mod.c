@@ -29,7 +29,6 @@ MODULE_INFO(retpoline, "Y");
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0x88db9f48, "__check_object_size" },
 	{ 0x13c49cc2, "_copy_from_user" },
 	{ 0xcf2a6966, "up" },
 	{ 0x37a0cba, "kfree" },
