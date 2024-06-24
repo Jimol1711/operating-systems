@@ -29,21 +29,29 @@ MODULE_INFO(retpoline, "Y");
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
+	{ 0x88db9f48, "__check_object_size" },
 	{ 0x13c49cc2, "_copy_from_user" },
+	{ 0x92540fbf, "finish_wait" },
 	{ 0xcf2a6966, "up" },
 	{ 0x37a0cba, "kfree" },
+	{ 0x8c26d495, "prepare_to_wait_event" },
+	{ 0xe2964344, "__wake_up" },
 	{ 0xbdfb6dbb, "__fentry__" },
 	{ 0x92997ed8, "_printk" },
+	{ 0x1000e51, "schedule" },
 	{ 0xd0da656b, "__stack_chk_fail" },
+	{ 0xfe487975, "init_wait_entry" },
 	{ 0x6626afca, "down" },
 	{ 0x5b8239ca, "__x86_return_thunk" },
 	{ 0x6b10bee1, "_copy_to_user" },
-	{ 0x15e85de1, "__register_chrdev" },
+	{ 0xd9a5ea54, "__init_waitqueue_head" },
+	{ 0xf78b296d, "__register_chrdev" },
 	{ 0x6bd0e573, "down_interruptible" },
-	{ 0xdcf9792a, "kmalloc_trace" },
-	{ 0x4c12d3f3, "kmalloc_caches" },
+	{ 0xfcef4fc3, "kmalloc_trace" },
+	{ 0xe2c17b5d, "__SCT__might_resched" },
+	{ 0x22f749f2, "kmalloc_caches" },
 	{ 0x6bc3fbc0, "__unregister_chrdev" },
-	{ 0x6093f1a5, "module_layout" },
+	{ 0xc4ae50da, "module_layout" },
 };
 
 MODULE_INFO(depends, "");
