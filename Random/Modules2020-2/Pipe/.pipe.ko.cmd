@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.ko := ld -r -m elf_x86_64 -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T arch/x86/module.lds -o /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.ko /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.o /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o;  true

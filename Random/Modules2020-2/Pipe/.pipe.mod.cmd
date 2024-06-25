@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod := printf '%s\n'   kmutex.o pipe-impl.o | awk '!x[$$0]++ { print("/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/"$$0) }' > /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod

@@ -1,8 +1,10 @@
-cmd_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o :=  gcc-12 -Wp,-MMD,/home/pss/Escritorio/Código/SOS/Tareas/T7/.kmutex.o.d -nostdinc -I/usr/src/linux-headers-6.1.0-21-common/arch/x86/include -I./arch/x86/include/generated -I/usr/src/linux-headers-6.1.0-21-common/include -I./include -I/usr/src/linux-headers-6.1.0-21-common/arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I/usr/src/linux-headers-6.1.0-21-common/include/uapi -I./include/generated/uapi -include /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler-version.h -include /usr/src/linux-headers-6.1.0-21-common/include/linux/kconfig.h -include /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler_types.h -D__KERNEL__ -fmacro-prefix-map=/usr/src/linux-headers-6.1.0-21-common/= -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security -std=gnu11 -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -fcf-protection=none -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -mindirect-branch-cs-prefix -mfunction-return=thunk-extern -fno-jump-tables -mharden-sls=all -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of-packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=2048 -fstack-protector-strong -Wno-main -Wno-unused-but-set-variable -Wno-unused-const-variable -Wno-dangling-pointer -ftrivial-auto-var-init=zero -fno-stack-clash-protection -pg -mrecord-mcount -mfentry -DCC_USING_FENTRY -Wvla -Wno-pointer-sign -Wcast-function-type -Wno-stringop-truncation -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -Wno-array-bounds -Wno-alloc-size-larger-than -Wimplicit-fallthrough=5 -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -Wno-packed-not-aligned -g -Wall -std=gnu99 -Wno-declaration-after-statement  -DMODULE  -DKBUILD_BASENAME='"kmutex"' -DKBUILD_MODNAME='"disco"' -D__KBUILD_MODNAME=kmod_disco -c -o /home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o /home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.c   ; ./tools/objtool/objtool --hacks=jump_label --hacks=noinstr --orc --retpoline --rethunk --sls --static-call --uaccess   --module /home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o :=  gcc-12 -Wp,-MMD,/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/.pipe.mod.o.d -nostdinc -I/usr/src/linux-headers-6.1.0-21-common/arch/x86/include -I./arch/x86/include/generated -I/usr/src/linux-headers-6.1.0-21-common/include -I./include -I/usr/src/linux-headers-6.1.0-21-common/arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I/usr/src/linux-headers-6.1.0-21-common/include/uapi -I./include/generated/uapi -include /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler-version.h -include /usr/src/linux-headers-6.1.0-21-common/include/linux/kconfig.h -include /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler_types.h -D__KERNEL__ -fmacro-prefix-map=/usr/src/linux-headers-6.1.0-21-common/= -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security -std=gnu11 -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -fcf-protection=none -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -mindirect-branch-cs-prefix -mfunction-return=thunk-extern -fno-jump-tables -mharden-sls=all -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of-packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=2048 -fstack-protector-strong -Wno-main -Wno-unused-but-set-variable -Wno-unused-const-variable -Wno-dangling-pointer -ftrivial-auto-var-init=zero -fno-stack-clash-protection -pg -mrecord-mcount -mfentry -DCC_USING_FENTRY -Wvla -Wno-pointer-sign -Wcast-function-type -Wno-stringop-truncation -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -Wno-array-bounds -Wno-alloc-size-larger-than -Wimplicit-fallthrough=5 -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -Wno-packed-not-aligned -g -DMODULE -DKBUILD_BASENAME='"pipe.mod"' -DKBUILD_MODNAME='"pipe"' -D__KBUILD_MODNAME=kmod_pipe -c -o /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.c
 
-source_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := /home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.c
+source_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o := /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.c
 
-deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := \
+deps_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o := \
+    $(wildcard include/config/MODULE_UNLOAD) \
+    $(wildcard include/config/RETPOLINE) \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler-version.h \
     $(wildcard include/config/CC_VERSION_TEXT) \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/kconfig.h \
@@ -16,16 +18,39 @@ deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := \
     $(wildcard include/config/CC_HAS_ASM_INLINE) \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler_attributes.h \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler-gcc.h \
-    $(wildcard include/config/RETPOLINE) \
     $(wildcard include/config/GCC_ASM_GOTO_OUTPUT_WORKAROUND) \
     $(wildcard include/config/ARCH_USE_BUILTIN_BSWAP) \
     $(wildcard include/config/SHADOW_CALL_STACK) \
     $(wildcard include/config/KCOV) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/init.h \
-    $(wildcard include/config/HAVE_ARCH_PREL32_RELOCATIONS) \
-    $(wildcard include/config/STRICT_KERNEL_RWX) \
-    $(wildcard include/config/STRICT_MODULE_RWX) \
-    $(wildcard include/config/LTO_CLANG) \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/module.h \
+    $(wildcard include/config/MODULES) \
+    $(wildcard include/config/SYSFS) \
+    $(wildcard include/config/MODULES_TREE_LOOKUP) \
+    $(wildcard include/config/LIVEPATCH) \
+    $(wildcard include/config/STACKTRACE_BUILD_ID) \
+    $(wildcard include/config/ARCH_USES_CFI_TRAPS) \
+    $(wildcard include/config/MODULE_SIG) \
+    $(wildcard include/config/ARCH_WANTS_MODULES_DATA_IN_VMALLOC) \
+    $(wildcard include/config/GENERIC_BUG) \
+    $(wildcard include/config/KALLSYMS) \
+    $(wildcard include/config/SMP) \
+    $(wildcard include/config/TRACEPOINTS) \
+    $(wildcard include/config/TREE_SRCU) \
+    $(wildcard include/config/BPF_EVENTS) \
+    $(wildcard include/config/JUMP_LABEL) \
+    $(wildcard include/config/TRACING) \
+    $(wildcard include/config/EVENT_TRACING) \
+    $(wildcard include/config/FTRACE_MCOUNT_RECORD) \
+    $(wildcard include/config/KPROBES) \
+    $(wildcard include/config/HAVE_STATIC_CALL_INLINE) \
+    $(wildcard include/config/KUNIT) \
+    $(wildcard include/config/PRINTK_INDEX) \
+    $(wildcard include/config/CONSTRUCTORS) \
+    $(wildcard include/config/FUNCTION_ERROR_INJECTION) \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/list.h \
+    $(wildcard include/config/DEBUG_LIST) \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/container_of.h \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/build_bug.h \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/compiler.h \
     $(wildcard include/config/TRACE_BRANCH_PROFILING) \
     $(wildcard include/config/PROFILE_ALL_BRANCHES) \
@@ -62,36 +87,6 @@ deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := \
     $(wildcard include/config/KCSAN) \
     $(wildcard include/config/KCSAN_WEAK_MEMORY) \
     $(wildcard include/config/KCSAN_IGNORE_ATOMICS) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/module.h \
-    $(wildcard include/config/MODULES) \
-    $(wildcard include/config/SYSFS) \
-    $(wildcard include/config/MODULES_TREE_LOOKUP) \
-    $(wildcard include/config/LIVEPATCH) \
-    $(wildcard include/config/STACKTRACE_BUILD_ID) \
-    $(wildcard include/config/ARCH_USES_CFI_TRAPS) \
-    $(wildcard include/config/MODULE_SIG) \
-    $(wildcard include/config/ARCH_WANTS_MODULES_DATA_IN_VMALLOC) \
-    $(wildcard include/config/GENERIC_BUG) \
-    $(wildcard include/config/KALLSYMS) \
-    $(wildcard include/config/SMP) \
-    $(wildcard include/config/TRACEPOINTS) \
-    $(wildcard include/config/TREE_SRCU) \
-    $(wildcard include/config/BPF_EVENTS) \
-    $(wildcard include/config/JUMP_LABEL) \
-    $(wildcard include/config/TRACING) \
-    $(wildcard include/config/EVENT_TRACING) \
-    $(wildcard include/config/FTRACE_MCOUNT_RECORD) \
-    $(wildcard include/config/KPROBES) \
-    $(wildcard include/config/HAVE_STATIC_CALL_INLINE) \
-    $(wildcard include/config/KUNIT) \
-    $(wildcard include/config/PRINTK_INDEX) \
-    $(wildcard include/config/MODULE_UNLOAD) \
-    $(wildcard include/config/CONSTRUCTORS) \
-    $(wildcard include/config/FUNCTION_ERROR_INJECTION) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/list.h \
-    $(wildcard include/config/DEBUG_LIST) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/container_of.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/build_bug.h \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/err.h \
   arch/x86/include/generated/uapi/asm/errno.h \
   /usr/src/linux-headers-6.1.0-21-common/include/uapi/asm-generic/errno.h \
@@ -125,6 +120,7 @@ deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := \
     $(wildcard include/config/ARCH_USE_SYM_ANNOTATIONS) \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/export.h \
     $(wildcard include/config/MODVERSIONS) \
+    $(wildcard include/config/HAVE_ARCH_PREL32_RELOCATIONS) \
     $(wildcard include/config/TRIM_UNUSED_KSYMS) \
   /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/linkage.h \
     $(wildcard include/config/X86_64) \
@@ -171,6 +167,10 @@ deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := \
     $(wildcard include/config/AMD_MEM_ENCRYPT) \
   /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/mem_encrypt.h \
     $(wildcard include/config/X86_MEM_ENCRYPT) \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/init.h \
+    $(wildcard include/config/STRICT_KERNEL_RWX) \
+    $(wildcard include/config/STRICT_MODULE_RWX) \
+    $(wildcard include/config/LTO_CLANG) \
   /usr/src/linux-headers-6.1.0-21-common/include/linux/cc_platform.h \
     $(wildcard include/config/ARCH_HAS_CC_PLATFORM) \
   /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/math_emu.h \
@@ -837,130 +837,41 @@ deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o := \
     $(wildcard include/config/MODULES_USE_ELF_REL) \
     $(wildcard include/config/MODULES_USE_ELF_RELA) \
   /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/orc_types.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/slab.h \
-    $(wildcard include/config/DEBUG_SLAB) \
-    $(wildcard include/config/FAILSLAB) \
-    $(wildcard include/config/MEMCG_KMEM) \
-    $(wildcard include/config/KFENCE) \
-    $(wildcard include/config/SLAB) \
-    $(wildcard include/config/SLUB) \
-    $(wildcard include/config/SLOB) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/percpu-refcount.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/kasan.h \
-    $(wildcard include/config/KASAN_STACK) \
-    $(wildcard include/config/KASAN_VMALLOC) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/kasan-enabled.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/fs.h \
-    $(wildcard include/config/READ_ONLY_THP_FOR_FS) \
-    $(wildcard include/config/FS_POSIX_ACL) \
-    $(wildcard include/config/CGROUP_WRITEBACK) \
-    $(wildcard include/config/IMA) \
-    $(wildcard include/config/FILE_LOCKING) \
-    $(wildcard include/config/FSNOTIFY) \
-    $(wildcard include/config/FS_ENCRYPTION) \
-    $(wildcard include/config/FS_VERITY) \
-    $(wildcard include/config/EPOLL) \
-    $(wildcard include/config/UNICODE) \
-    $(wildcard include/config/QUOTA) \
-    $(wildcard include/config/FS_DAX) \
-    $(wildcard include/config/BLOCK) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/wait_bit.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/kdev_t.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/kdev_t.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/dcache.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/rculist_bl.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/list_bl.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/bit_spinlock.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/lockref.h \
-    $(wildcard include/config/ARCH_USE_CMPXCHG_LOCKREF) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/stringhash.h \
-    $(wildcard include/config/DCACHE_WORD_ACCESS) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/hash.h \
-    $(wildcard include/config/HAVE_ARCH_HASH) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/path.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/list_lru.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/shrinker.h \
-    $(wildcard include/config/SHRINKER_DEBUG) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/capability.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/capability.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/semaphore.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/fcntl.h \
-    $(wildcard include/config/ARCH_32BIT_OFF_T) \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/fcntl.h \
-  arch/x86/include/generated/uapi/asm/fcntl.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/asm-generic/fcntl.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/openat2.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/migrate_mode.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/percpu-rwsem.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/rcuwait.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/sched/signal.h \
-    $(wildcard include/config/SCHED_AUTOGROUP) \
-    $(wildcard include/config/BSD_PROCESS_ACCT) \
-    $(wildcard include/config/TASKSTATS) \
-    $(wildcard include/config/STACK_GROWSUP) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/signal.h \
-    $(wildcard include/config/DYNAMIC_SIGFRAME) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/sched/jobctl.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/sched/task.h \
-    $(wildcard include/config/HAVE_EXIT_THREAD) \
-    $(wildcard include/config/ARCH_WANTS_DYNAMIC_TASK_STRUCT) \
-    $(wildcard include/config/HAVE_ARCH_THREAD_STRUCT_WHITELIST) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/uaccess.h \
-    $(wildcard include/config/ARCH_HAS_SUBPAGE_FAULTS) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/fault-inject-usercopy.h \
-    $(wildcard include/config/FAULT_INJECTION_USERCOPY) \
-  /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/uaccess.h \
-    $(wildcard include/config/CC_HAS_ASM_GOTO_OUTPUT) \
-    $(wildcard include/config/CC_HAS_ASM_GOTO_TIED_OUTPUT) \
-    $(wildcard include/config/ARCH_HAS_COPY_MC) \
-    $(wildcard include/config/X86_INTEL_USERCOPY) \
-  /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/smap.h \
-  /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/extable.h \
-    $(wildcard include/config/BPF_JIT) \
-  /usr/src/linux-headers-6.1.0-21-common/include/asm-generic/access_ok.h \
-    $(wildcard include/config/ALTERNATE_USER_ADDRESS_SPACE) \
-  /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/uaccess_64.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/cred.h \
-    $(wildcard include/config/DEBUG_CREDENTIALS) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/key.h \
-    $(wildcard include/config/KEY_NOTIFICATIONS) \
-    $(wildcard include/config/NET) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/assoc_array.h \
-    $(wildcard include/config/ASSOCIATIVE_ARRAY) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/sched/user.h \
-    $(wildcard include/config/VFIO_PCI_ZDEV_KVM) \
-    $(wildcard include/config/WATCH_QUEUE) \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/percpu_counter.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/ratelimit.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/rcu_sync.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/delayed_call.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/uuid.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/uuid.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/errseq.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/ioprio.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/sched/rt.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/iocontext.h \
-    $(wildcard include/config/BLK_ICQ) \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/ioprio.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/fs_types.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/mount.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/mnt_idmapping.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/fs.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/quota.h \
-    $(wildcard include/config/QUOTA_NETLINK_INTERFACE) \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/dqblk_xfs.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/dqblk_v1.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/dqblk_v2.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/dqblk_qtree.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/projid.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/uapi/linux/quota.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/nfs_fs_i.h \
-  /usr/src/linux-headers-6.1.0-21-common/include/linux/proc_fs.h \
-    $(wildcard include/config/PROC_PID_ARCH_STATUS) \
-  /home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.h \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/build-salt.h \
+    $(wildcard include/config/BUILD_SALT) \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/elfnote.h \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/elfnote-lto.h \
+    $(wildcard include/config/LTO) \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/export-internal.h \
+  /usr/src/linux-headers-6.1.0-21-common/include/linux/vermagic.h \
+    $(wildcard include/config/PREEMPT_BUILD) \
+  include/generated/utsrelease.h \
+  /usr/src/linux-headers-6.1.0-21-common/arch/x86/include/asm/vermagic.h \
+    $(wildcard include/config/M486SX) \
+    $(wildcard include/config/M486) \
+    $(wildcard include/config/M586) \
+    $(wildcard include/config/M586TSC) \
+    $(wildcard include/config/M586MMX) \
+    $(wildcard include/config/MCORE2) \
+    $(wildcard include/config/M686) \
+    $(wildcard include/config/MPENTIUMII) \
+    $(wildcard include/config/MPENTIUMIII) \
+    $(wildcard include/config/MPENTIUMM) \
+    $(wildcard include/config/MPENTIUM4) \
+    $(wildcard include/config/MK6) \
+    $(wildcard include/config/MK7) \
+    $(wildcard include/config/MK8) \
+    $(wildcard include/config/MELAN) \
+    $(wildcard include/config/MCRUSOE) \
+    $(wildcard include/config/MEFFICEON) \
+    $(wildcard include/config/MWINCHIPC6) \
+    $(wildcard include/config/MWINCHIP3D) \
+    $(wildcard include/config/MCYRIXIII) \
+    $(wildcard include/config/MVIAC3_2) \
+    $(wildcard include/config/MVIAC7) \
+    $(wildcard include/config/MGEODEGX1) \
+    $(wildcard include/config/MGEODE_LX) \
 
-/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o: $(deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o)
+/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o: $(deps_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o)
 
-$(deps_/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o):
-
-/home/pss/Escritorio/Código/SOS/Tareas/T7/kmutex.o: $(wildcard ./tools/objtool/objtool)
+$(deps_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod.o):

@@ -1,4 +1,3 @@
-#if 0
 /* Necessary includes for device drivers */
 #include <linux/init.h>
 /* #include <linux/config.h> */
@@ -63,6 +62,7 @@ struct disco_pipe {
 static struct disco_pipe *waiting_writer = NULL;
 static struct disco_pipe *waiting_reader = NULL;
 static KMutex global_mutex;
+static KCondition global_cond;
 
 /* Initialize the module */
 int disco_init(void) {
@@ -103,8 +103,6 @@ int disco_open(struct inode *inode, struct file *filp) {
     m_init(&pipe->mutex);
     c_init(&pipe->cond);
 
-    // filp->private_data = pipe; // COMENTADO
-
     m_lock(&global_mutex);
 
     // Logic to pair reader and writer
@@ -119,7 +117,7 @@ int disco_open(struct inode *inode, struct file *filp) {
             waiting_writer = pipe;
             filp->private_data = pipe;
             while (waiting_writer == pipe) {
-                if (c_wait(&global_mutex.cond, &global_mutex)) {
+                if (c_wait(&global_cond, &global_mutex)) {
                     waiting_writer = NULL;
                     kfree(pipe->buffer);
                     kfree(pipe);
@@ -236,8 +234,8 @@ epilog:
     m_unlock(&pipe->mutex);
     return ret;
 }
-#endif
 
+#if 0
 /* Necessary includes for device drivers */
 #include <linux/init.h>
 #include <linux/module.h>
@@ -459,3 +457,4 @@ epilog:
   m_unlock(&mutex);
   return rc;
 }
+#endif

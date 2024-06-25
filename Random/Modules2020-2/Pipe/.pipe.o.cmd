@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.o := ld -m elf_x86_64 -z noexecstack --no-warn-rwx-segments   -r -o /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.o @/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Pipe/pipe.mod 

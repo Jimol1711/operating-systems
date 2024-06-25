@@ -44,7 +44,7 @@ module_exit(pipe_exit);
 
 /* Global variables of the driver */
 
-int pipe_major = 61;     /* Major number */
+int pipe_major = 62;     /* Major number */
 
 /* Buffer to store data */
 #define MAX_SIZE 10
