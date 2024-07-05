@@ -426,8 +426,6 @@ epilog:
   return rc;
 }
 #endif
-
-#if 1 // ULTIMO INTENTO CHATGPT
 /* Necessary includes for device drivers */
 #include <linux/init.h>
 #include <linux/module.h>
@@ -437,15 +435,16 @@ epilog:
 #include <linux/errno.h> /* error codes */
 #include <linux/types.h> /* size_t */
 #include <linux/uaccess.h> /* copy_from/to_user */
+
 #include "kmutex.h"
 
 MODULE_LICENSE("Dual BSD/GPL");
 
 /* Declaration of disco.c functions */
-static int disco_open(struct inode *inode, struct file *filp);
-static int disco_release(struct inode *inode, struct file *filp);
-static ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos);
-static ssize_t disco_write(struct file *filp, const char *buf, size_t count, loff_t *f_pos);
+int disco_open(struct inode *inode, struct file *filp);
+int disco_release(struct inode *inode, struct file *filp);
+ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos);
+ssize_t disco_write(struct file *filp, const char *buf, size_t count, loff_t *f_pos);
 
 void disco_exit(void);
 int disco_init(void);
@@ -453,172 +452,180 @@ int disco_init(void);
 /* Structure that declares the usual file */
 /* access functions */
 struct file_operations disco_fops = {
-    read: disco_read,
-    write: disco_write,
-    open: disco_open,
-    release: disco_release
+    read = disco_read,
+    write = disco_write,
+    open = disco_open,
+    release = disco_release
 };
 
 /* Declaration of the init and exit functions */
 module_init(disco_init);
 module_exit(disco_exit);
 
+/* Estructura para el pipe */
+struct disco_pipe {
+    char *buffer;
+    int in, out, size;
+    int closed; // Indica si el escritor cerró el pipe
+    struct file *writer; // Referencia al file descriptor del escritor
+    struct file *reader; // Referencia al file descriptor del lector
+    KMutex mutex;
+    KCondition cond;
+};
+
+/* Variables globales */
+int disco_major = 61;     /* Major number */
+#define MAX_SIZE 8192
 #define TRUE 1
 #define FALSE 0
 
-/* Global variables of the driver */
-int disco_major = 61; /* Major number */
-#define MAX_SIZE 8192
+/* Mutex y condicion para disco */
+KMutex mutex;
+KCondition cond;
+int waiting_reader = FALSE;
+int waiting_writer = FALSE;
 
-/* Buffer and synchronization primitives */
-static char *disco_buffer;
-static ssize_t curr_size;
-static int writer_waiting, reader_waiting;
-
-/* Mutex and condition variables */
-static KMutex mutex;
-static KCondition cond_reader, cond_writer;
-
-/* Module initialization */
 int disco_init(void) {
-    int result;
+    int rc;
 
-    result = register_chrdev(disco_major, "disco", &disco_fops);
-    if (result < 0) {
-        printk("<1>disco: cannot obtain major number %d\n", disco_major);
-        return result;
+    /* Registering device */
+    rc = register_chrdev(disco_major, "disco", &disco_fops);
+    if (rc < 0) {
+        printk(KERN_ALERT "disco: cannot obtain major number %d\n", disco_major);
+        return rc;
     }
 
-    disco_buffer = kmalloc(MAX_SIZE, GFP_KERNEL);
-    if (!disco_buffer) {
-        unregister_chrdev(disco_major, "disco");
-        return -ENOMEM;
-    }
-    memset(disco_buffer, 0, MAX_SIZE);
-
-    curr_size = 0;
-    writer_waiting = reader_waiting = FALSE;
-
-    m_init(&mutex);
-    c_init(&cond_reader);
-    c_init(&cond_writer);
-
-    printk("<1>Inserting disco module\n");
+    printk(KERN_INFO "Inserting disco module\n");
     return 0;
 }
 
-/* Module cleanup */
 void disco_exit(void) {
+    /* Freeing the major number */
     unregister_chrdev(disco_major, "disco");
-    if (disco_buffer) {
-        kfree(disco_buffer);
-    }
-    printk("<1>Removing disco module\n");
+
+    printk(KERN_INFO "Removing disco module\n");
 }
 
-/* Open function */
-static int disco_open(struct inode *inode, struct file *filp) {
+int disco_open(struct inode *inode, struct file *filp) {
+
+    int rc = 0;
     m_lock(&mutex);
 
     if (filp->f_mode & FMODE_WRITE) {
-        while (writer_waiting || reader_waiting) {
-            if (c_wait(&cond_writer, &mutex)) {
-                m_unlock(&mutex);
-                return -EINTR;
-            }
-        }
-        writer_waiting = TRUE;
+      if (waiting_reader) {
+        // Pair with the waiting reader
+      } else {
+        // Wait for a reader
+      }
     } else if (filp->f_mode & FMODE_READ) {
-        while (reader_waiting || writer_waiting) {
-            if (c_wait(&cond_reader, &mutex)) {
-                m_unlock(&mutex);
-                return -EINTR;
-            }
-        }
-        reader_waiting = TRUE;
+      if (waiting_writer) {
+        // Pair with the waiting writer
+      } else {
+        // Wait for a writer
+      }
     }
 
-    m_unlock(&mutex);
-    return 0;
+epilog:
+  m_unlock(&mutex);
+  return rc;
 }
 
-/* Release function */
-static int disco_release(struct inode *inode, struct file *filp) {
-    m_lock(&mutex);
+int disco_release(struct inode *inode, struct file *filp) {
+    struct disco_pipe *pipe = filp->private_data;
+
+    m_lock(&pipe->mutex);
 
     if (filp->f_mode & FMODE_WRITE) {
-        writer_waiting = FALSE;
-        c_signal(&cond_reader);
+        pipe->closed = 1;
+        c_broadcast(&pipe->cond);
+        printk(KERN_INFO "disco_release: writer closed\n");
     } else if (filp->f_mode & FMODE_READ) {
-        reader_waiting = FALSE;
-        c_signal(&cond_writer);
+        if (pipe->writer) {
+            pipe->writer = NULL;
+        }
+        printk(KERN_INFO "disco_release: reader closed\n");
     }
 
-    m_unlock(&mutex);
+    if (!pipe->writer && !pipe->reader) {
+        kfree(pipe->buffer);
+        kfree(pipe);
+        printk(KERN_INFO "disco_release: pipe freed\n");
+    }
+
+    m_unlock(&pipe->mutex);
+    printk(KERN_INFO "disco_release: release successful %p\n", filp);
     return 0;
 }
 
-/* Read function */
-static ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos) {
-    ssize_t ret = 0;
+ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos) {
+  int count = ucount;
+  struct disco_pipe pipe = filp->private_data;
 
-    m_lock(&mutex);
+  printk("<1>read %p %d\n", filp, count);
+  m_lock(&mutex);
 
-    while (curr_size == 0 && writer_waiting) {
-        if (c_wait(&cond_reader, &mutex)) {
-            m_unlock(&mutex);
-            return -EINTR;
-        }
+  while (pipe->size==0) {
+    /* si no hay nada en el pipe, el lector espera */
+    if (c_wait(&cond, &mutex)) {
+      printk("<1>read interrupted\n");
+      count= -EINTR;
+      goto epilog;
     }
+  }
 
-    if (count > curr_size) {
-        count = curr_size;
+  if (count > pipe->size) {
+    count= pipe->size;
+  }
+
+  /* Transfiriendo datos hacia el espacio del usuario */
+  for (int k= 0; k<count; k++) {
+    if (copy_to_user(buf+k, pipe->buffer+out, 1)!=0) {
+      /* el valor de buf es una direccion invalida */
+      count= -EFAULT;
+      goto epilog;
     }
+    printk("<1>read byte %c (%d) from %d\n",
+            pipe->buffer[pipe->out], pipe->buffer[pipe->out], pipe->out);
+    pipe->out= (pipe->out+1)%MAX_SIZE;
+    pipe->size--;
+  }
 
-    if (copy_to_user(buf, disco_buffer, count)) {
-        ret = -EFAULT;
-        goto out;
-    }
-
-    curr_size -= count;
-    memmove(disco_buffer, disco_buffer + count, curr_size);
-    ret = count;
-
-out:
-    c_signal(&cond_writer);
-    m_unlock(&mutex);
-    return ret;
+epilog:
+  c_broadcast(&cond);
+  m_unlock(&mutex);
+  return count;
 }
 
-/* Write function */
-static ssize_t disco_write(struct file *filp, const char *buf, size_t count, loff_t *f_pos) {
-    ssize_t ret = 0;
+ssize_t disco_write(struct file *filp, const char *buf, size_t count, loff_t *f_pos) {
+  int count= ucount;
+  struct disco_pipe pipe = filp->private_data;
 
-    m_lock(&mutex);
+  printk("<1>write %p %d\n", filp, count);
+  m_lock(&mutex);
 
-    while (curr_size == MAX_SIZE && reader_waiting) {
-        if (c_wait(&cond_writer, &mutex)) {
-            m_unlock(&mutex);
-            return -EINTR;
-        }
+  for (int k= 0; k<count; k++) {
+    while (pipe->size==MAX_SIZE) {
+      /* si el buffer esta lleno, el escritor espera */
+      if (c_wait(&cond, &mutex)) {
+        printk("<1>write interrupted\n");
+        count= -EINTR;
+        goto epilog;
+      }
     }
 
-    if (count > MAX_SIZE - curr_size) {
-        count = MAX_SIZE - curr_size;
+    if (copy_from_user(pipe->buffer+in, buf+k, 1)!=0) {
+      /* el valor de buf es una direccion invalida */
+      count= -EFAULT;
+      goto epilog;
     }
+    printk("<1>write byte %c (%d) at %d\n",
+           pipe->buffer[pipe->in], pipe->buffer[pipe->in], pipe->in);
+    pipe->in= (pipe->in+1)%MAX_SIZE;
+    pipe->size++;
+    c_broadcast(&cond);
+  }
 
-    if (copy_from_user(disco_buffer + curr_size, buf, count)) {
-        ret = -EFAULT;
-        goto out;
-    }
-
-    curr_size += count;
-    ret = count;
-
-out:
-    c_signal(&cond_reader);
-    m_unlock(&mutex);
-    return ret;
+epilog:
+  m_unlock(&mutex);
+  return count;
 }
-
-#endif
