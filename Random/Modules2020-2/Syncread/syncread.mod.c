@@ -39,12 +39,12 @@ __used __section("__versions") = {
 	{ 0x6626afca, "down" },
 	{ 0x5b8239ca, "__x86_return_thunk" },
 	{ 0x6b10bee1, "_copy_to_user" },
-	{ 0x15e85de1, "__register_chrdev" },
+	{ 0xf78b296d, "__register_chrdev" },
 	{ 0x6bd0e573, "down_interruptible" },
-	{ 0xdcf9792a, "kmalloc_trace" },
-	{ 0x4c12d3f3, "kmalloc_caches" },
+	{ 0xfcef4fc3, "kmalloc_trace" },
+	{ 0x22f749f2, "kmalloc_caches" },
 	{ 0x6bc3fbc0, "__unregister_chrdev" },
-	{ 0x6093f1a5, "module_layout" },
+	{ 0xc4ae50da, "module_layout" },
 };
 
 MODULE_INFO(depends, "");
