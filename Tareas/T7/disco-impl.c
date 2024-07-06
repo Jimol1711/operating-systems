@@ -204,7 +204,7 @@ epilog:
 #endif
 
 // ESTE FUNCIONA A MEDIAS
-#if 0
+#if 1
 /* Necessary includes for device drivers */
 #include <linux/init.h>
 #include <linux/module.h>
@@ -310,57 +310,71 @@ int disco_open(struct inode *inode, struct file *filp) {
   int rc = 0;
 
   m_lock(&mutex);
+  printk(KERN_INFO "disco_open: called\n");
 
   if (filp->f_mode & FMODE_WRITE) {
     if (reader) {
       writer = filp;
+      printk(KERN_INFO "disco_open: matched writer with reader\n");
       c_signal(&cond); /* Signal the reader */
     } else {
       writer = filp;
+      printk(KERN_INFO "disco_open: writer waiting for reader\n");
       while (!reader) {
         if (c_wait(&cond, &mutex)) {
           rc = -EINTR;
           writer = NULL;
+          printk(KERN_INFO "disco_open: writer interrupted\n");
           goto epilog;
         }
       }
+      printk(KERN_INFO "disco_open: writer matched with reader\n");
       c_signal(&cond); /* Signal the reader */
     }
   } else if (filp->f_mode & FMODE_READ) {
     if (writer) {
       reader = filp;
+      printk(KERN_INFO "disco_open: matched reader with writer\n");
       c_signal(&cond); /* Signal the writer */
     } else {
       reader = filp;
+      printk(KERN_INFO "disco_open: reader waiting for writer\n");
       while (!writer) {
         if (c_wait(&cond, &mutex)) {
           rc = -EINTR;
           reader = NULL;
+          printk(KERN_INFO "disco_open: reader interrupted\n");
           goto epilog;
         }
       }
+      printk(KERN_INFO "disco_open: reader matched with writer\n");
       c_signal(&cond); /* Signal the writer */
     }
   }
 
 epilog:
   m_unlock(&mutex);
+  printk(KERN_INFO "disco_open: open successful %p\n", filp);
   return rc;
 }
 
 /* Release the device */
 int disco_release(struct inode *inode, struct file *filp) {
   m_lock(&mutex);
+  printk(KERN_INFO "disco_release: called\n");
 
   if (filp == writer) {
     writer = NULL;
+    printk(KERN_INFO "disco_release: writer released\n");
     c_broadcast(&cond); /* Notify all waiting readers */
   } else if (filp == reader) {
     reader = NULL;
+    printk(KERN_INFO "disco_release: reader released\n");
     c_broadcast(&cond); /* Notify all waiting writers */
   }
 
   m_unlock(&mutex);
+  printk(KERN_INFO "disco_release: release successful %p\n", filp);
   return 0;
 }
 
@@ -369,10 +383,13 @@ ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos) {
   ssize_t rc;
 
   m_lock(&mutex);
+  printk(KERN_INFO "disco_read: called, buffer_size=%ld\n", buffer_size);
 
   while (buffer_size == 0 && writer) {
+    printk(KERN_INFO "disco_read: waiting for data\n");
     if (c_wait(&cond, &mutex)) {
       rc = -EINTR;
+      printk(KERN_INFO "disco_read: interrupted while waiting for data\n");
       goto epilog;
     }
   }
@@ -383,6 +400,7 @@ ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos) {
 
   if (copy_to_user(buf, disco_buffer, count) != 0) {
     rc = -EFAULT;
+    printk(KERN_ALERT "disco_read: copy_to_user failed\n");
     goto epilog;
   }
 
@@ -426,6 +444,7 @@ epilog:
   return rc;
 }
 #endif
+#if 0
 /* Necessary includes for device drivers */
 #include <linux/init.h>
 #include <linux/module.h>
@@ -629,3 +648,4 @@ epilog:
   m_unlock(&mutex);
   return count;
 }
+#endif
