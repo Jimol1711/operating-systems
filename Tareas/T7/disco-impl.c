@@ -406,6 +406,7 @@ ssize_t disco_read(struct file *filp, char *buf, size_t count, loff_t *f_pos) {
 
   buffer_size = 0;
   rc = count;
+  printk(KERN_INFO "disco_read: read %zu bytes\n", count);
   c_signal(&cond); /* Notify the writer */
 
 epilog:
@@ -418,10 +419,13 @@ ssize_t disco_write(struct file *filp, const char *buf, size_t count, loff_t *f_
   ssize_t rc;
 
   m_lock(&mutex);
+  printk(KERN_INFO "disco_write: called, buffer_size=%ld\n", buffer_size);
 
   while (buffer_size > 0 && reader) {
+    printk(KERN_INFO "disco_write: waiting for buffer space\n");
     if (c_wait(&cond, &mutex)) {
       rc = -EINTR;
+      printk(KERN_INFO "disco_write: interrupted while waiting for buffer space\n");
       goto epilog;
     }
   }
@@ -432,11 +436,13 @@ ssize_t disco_write(struct file *filp, const char *buf, size_t count, loff_t *f_
 
   if (copy_from_user(disco_buffer, buf, count) != 0) {
     rc = -EFAULT;
+    printk(KERN_ALERT "disco_write: copy_from_user failed\n");
     goto epilog;
   }
 
   buffer_size = count;
   rc = count;
+  printk(KERN_INFO "disco_write: wrote %zu bytes\n", count);
   c_signal(&cond); /* Notify the reader */
 
 epilog:
