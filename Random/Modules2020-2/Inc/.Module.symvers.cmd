@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Inc/Module.symvers :=  sed 's/ko$$/o/'  /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Inc/modules.order | scripts/mod/modpost -m     -o /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Inc/Module.symvers -e -i Module.symvers -T - 

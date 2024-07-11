@@ -1,0 +1,1 @@
+cmd_/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Inc/inc.mod := printf '%s\n'   inc-impl.o | awk '!x[$$0]++ { print("/home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Inc/"$$0) }' > /home/pss/Escritorio/Código/SOS/Random/Modules2020-2/Inc/inc.mod
